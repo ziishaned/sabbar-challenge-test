@@ -73,3 +73,7 @@ https://www.getpostman.com/collections/4a3e055c9d0bb6ee6517
 ```
 
 ![Postman](https://imgur.com/MYJcUT4.png)
+
+### Tests
+
+> I was not able to add tests due to lack of time, but the test should have been there.

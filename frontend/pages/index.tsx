@@ -131,6 +131,7 @@ function Home(props: HomeProps): ReactElement {
                                 </Button>
                                 <Select
                                     width="30%"
+                                    value={limit}
                                     placeholder='Limit'
                                     onChange={(event): void => {
                                         navigate(`/?page=${page}&limit=${event.target.value}${isDriver ? `&isDriver=${isDriver}` : ''}`);
