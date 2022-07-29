@@ -34,6 +34,9 @@ export function DeleteCustomerModal(props: DeleteCustomerModalProps): ReactEleme
     const deleteCustomer = (): void => {
         setIsLoadingDeleteCustomerApi(true)
         axios.delete(`/api/customer/${customerId}`)
+            .then(() => {
+                onReloadCustomers();
+            })
             .catch((error) => {
                 toast({
                     status: 'error',
@@ -43,7 +46,6 @@ export function DeleteCustomerModal(props: DeleteCustomerModalProps): ReactEleme
                 onCloseCustomerDeleteModal();
             })
             .finally(() => {
-                onReloadCustomers();
                 setIsLoadingDeleteCustomerApi(false);
                 onCloseCustomerDeleteModal();
             });
@@ -73,6 +75,7 @@ export function DeleteCustomerModal(props: DeleteCustomerModalProps): ReactEleme
                     </Button>
                     <Button
                         type='submit'
+                        boxShadow='sm'
                         colorScheme='red'
                         onClick={deleteCustomer}
                         isLoading={isLoadingDeleteCustomerApi}

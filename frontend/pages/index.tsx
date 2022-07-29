@@ -16,8 +16,10 @@ import {
     Tr,
     useToast
 } from "@chakra-ui/react";
+
 import {EditCustomerModal} from "../components/edit-customer-modal";
 import {DeleteCustomerModal} from "../components/delete-customer-modal";
+import {CreateCustomerModal} from "../components/create-customer-modal";
 
 export default function Home(): ReactElement {
     const toast = useToast();
@@ -31,6 +33,8 @@ export default function Home(): ReactElement {
 
     const [customerIdToEdit, setCustomerIdToEdit] = useState<string>();
     const [toggleCustomerEditModal, setToggleCustomerEditModal] = useState<boolean>(false);
+
+    const [toggleCustomerCreateModal, setToggleCustomerCreateModal] = useState<boolean>(false);
 
     useEffect((): void => {
         getCustomers();
@@ -55,20 +59,32 @@ export default function Home(): ReactElement {
             <DeleteCustomerModal
                 customerId={customerIdToDelete}
                 isOpen={toggleCustomerDeleteModal}
-                onReloadCustomers={() => setToggleReloadCustomers(!toggleReloadCustomers)}
-                onCloseCustomerDeleteModal={() => setToggleCustomerDeleteModal(!toggleCustomerDeleteModal)}
+                onReloadCustomers={(): void => setToggleReloadCustomers(!toggleReloadCustomers)}
+                onCloseCustomerDeleteModal={(): void => setToggleCustomerDeleteModal(!toggleCustomerDeleteModal)}
+            />
+            <CreateCustomerModal
+                isOpen={toggleCustomerCreateModal}
+                onReloadCustomers={(): void => setToggleReloadCustomers(!toggleReloadCustomers)}
+                onCloseCustomerCreateModal={(): void => setToggleCustomerCreateModal(!toggleCustomerCreateModal)}
             />
             <EditCustomerModal
                 customerId={customerIdToEdit}
                 isOpen={toggleCustomerEditModal}
-                onReloadCustomers={() => setToggleReloadCustomers(!toggleReloadCustomers)}
-                onCloseCustomerEditModal={() => setToggleCustomerEditModal(!toggleCustomerEditModal)}
+                onReloadCustomers={(): void => setToggleReloadCustomers(!toggleReloadCustomers)}
+                onCloseCustomerEditModal={(): void => setToggleCustomerEditModal(!toggleCustomerEditModal)}
             />
 
             <Stack maxWidth="70%" margin="auto" spacing="16px" mt="16px">
                 <Stack isInline justifyContent='space-between' alignItems='center'>
                     <Heading as='h3' size='lg'>Customers</Heading>
-                    <Button size='sm' colorScheme='blue' boxShadow='sm'>Create</Button>
+                    <Button
+                        size='sm'
+                        boxShadow='sm'
+                        colorScheme='blue'
+                        onClick={(): void => setToggleCustomerCreateModal(!toggleCustomerCreateModal)}
+                    >
+                        Create
+                    </Button>
                 </Stack>
                 {isLoadingGetCustomersApi && (
                     <Stack isInline py="25px" justifyContent='center' spacing="14px">

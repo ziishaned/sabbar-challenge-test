@@ -41,7 +41,7 @@ export function EditCustomerModal(props: EditCustomerProps): ReactElement {
     const [isLoadingGetCustomerApi, setIsLoadingGetCustomerApi] = useState<boolean>();
     const [isLoadingUpdateCustomerApi, setIsLoadingUpdateCustomerApi] = useState<boolean>();
 
-    const {register, handleSubmit, setValue, formState: {errors}} = useForm<Partial<Customer>>();
+    const {register, handleSubmit, setValue, reset, formState: {errors}} = useForm<Partial<Customer>>();
 
     useEffect((): void => {
         if (!customerId) return;
@@ -83,6 +83,7 @@ export function EditCustomerModal(props: EditCustomerProps): ReactElement {
                     status: 'success',
                     description: 'Customer updated successfully!',
                 });
+                reset();
                 setCustomer(res.data);
                 onCloseCustomerEditModal();
             })
@@ -148,7 +149,6 @@ export function EditCustomerModal(props: EditCustomerProps): ReactElement {
                             <ModalFooter as={Stack} spacing='12px' isInline>
                                 <Button
                                     type='button'
-                                    boxShadow='sm'
                                     variant='ghost'
                                     onClick={(): void => {
                                         onClose();
