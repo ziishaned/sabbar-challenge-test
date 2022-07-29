@@ -2,7 +2,7 @@ import axios from "axios";
 import {useForm} from "react-hook-form";
 import {ReactElement, useState} from "react";
 import {
-    Button,
+    Button, Checkbox,
     FormControl,
     FormErrorMessage,
     FormLabel,
@@ -88,27 +88,28 @@ export function CreateCustomerModal(props: EditCustomerProps): ReactElement {
                         <FormControl isInvalid={!!errors.locationLongitude}>
                             <FormLabel htmlFor='locationLongitude'>Location Longitude</FormLabel>
                             <Input
-                                type='text' {...register("locationLongitude", {required: 'Location longitude field is required'})}/>
+                                type='number' {...register("locationLongitude", {required: 'Location longitude field is required'})}/>
                             <FormErrorMessage>{errors?.locationLongitude?.message}</FormErrorMessage>
                         </FormControl>
                         <FormControl isInvalid={!!errors.locationLatitude}>
                             <FormLabel htmlFor='locationLatitude'>Location Latitude</FormLabel>
                             <Input
-                                type='text' {...register("locationLatitude", {required: 'Location latitude field is required'})}/>
+                                type='number' {...register("locationLatitude", {required: 'Location latitude field is required'})}/>
                             <FormErrorMessage>{errors?.locationLatitude?.message}</FormErrorMessage>
                         </FormControl>
                         <FormControl isInvalid={!!errors.numberOfRides}>
                             <FormLabel htmlFor='numberOfRides'>Number of Rides</FormLabel>
                             <Input
-                                type='text' {...register("numberOfRides", {required: 'Number of rides field is required'})}/>
+                                type='number' {...register("numberOfRides", {required: 'Number of rides field is required'})}/>
                             <FormErrorMessage>{errors?.numberOfRides?.message}</FormErrorMessage>
                         </FormControl>
                         <FormControl isInvalid={!!errors.rating}>
                             <FormLabel htmlFor='rating'>Rating</FormLabel>
                             <Input
-                                type='text' {...register("rating", {required: 'Rating field is required'})}/>
+                                type='number' {...register("rating", {required: 'Rating field is required'})}/>
                             <FormErrorMessage>{errors?.rating?.message}</FormErrorMessage>
                         </FormControl>
+                        <Checkbox {...register("isDriver")}>Is Driver?</Checkbox>
                     </ModalBody>
                     <ModalFooter as={Stack} spacing='12px' isInline>
                         <Button

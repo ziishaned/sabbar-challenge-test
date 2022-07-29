@@ -21,7 +21,7 @@ export class Customer {
   numberOfRides: number;
 
   @Prop()
-  averageRating: number;
+  rating: number;
 }
 
 export const CustomerSchema = SchemaFactory.createForClass(Customer);

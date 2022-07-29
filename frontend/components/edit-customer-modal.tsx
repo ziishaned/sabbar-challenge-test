@@ -151,7 +151,7 @@ export function EditCustomerModal(props: EditCustomerProps): ReactElement {
                                 <FormControl isInvalid={!!errors.rating}>
                                     <FormLabel htmlFor='rating'>Rating</FormLabel>
                                     <Input
-                                        type='text' {...register("rating", {required: 'Average rating field is required'})}/>
+                                        type='text' {...register("rating", {required: 'Rating field is required'})}/>
                                     <FormErrorMessage>{errors?.rating?.message}</FormErrorMessage>
                                 </FormControl>
                             </ModalBody>

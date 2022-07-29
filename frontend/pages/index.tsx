@@ -111,10 +111,11 @@ function Home(props: HomeProps): ReactElement {
                         <Thead>
                             <Tr>
                                 <Th>Name</Th>
+                                <Th>Is Driver?</Th>
                                 <Th>Longitude</Th>
                                 <Th>Latitude</Th>
                                 <Th isNumeric>Number of Rides</Th>
-                                <Th isNumeric>Average Rating</Th>
+                                <Th isNumeric>Rating</Th>
                                 <Th/>
                             </Tr>
                         </Thead>
@@ -129,6 +130,7 @@ function Home(props: HomeProps): ReactElement {
                                     {customers.map((customer: Customer): ReactElement => (
                                         <Tr key={customer._id}>
                                             <Td>{customer.name || '-'}</Td>
+                                            <Td>{customer.isDriver ? 'Yes' : 'No'}</Td>
                                             <Td>{customer.locationLongitude || '-'}</Td>
                                             <Td>{customer.locationLatitude || '-'}</Td>
                                             <Td isNumeric>{customer.numberOfRides}</Td>
