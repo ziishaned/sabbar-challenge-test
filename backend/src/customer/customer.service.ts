@@ -14,7 +14,7 @@ export class CustomerService {
   ) {}
 
   async findAll(): Promise<Customer[]> {
-    return this.customerModel.find().exec();
+    return this.customerModel.find().sort({ updatedAt: -1 }).exec();
   }
 
   async findOne(id: string): Promise<Customer | null> {

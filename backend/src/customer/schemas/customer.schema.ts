@@ -3,7 +3,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 export type CustomerDocument = Customer & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Customer {
   @Prop()
   fullName: string;
