@@ -34,12 +34,35 @@
    ```bash
    yarn dev
    ```
+
+5. Seed the database with below command:
+   ```bash
+   cd backend
+   yarn seed
+   ```
    
-5. Application URLs:
+6. Application URLs:
    ```bash
    frontend: http://localhost:3000/
    backend: http://localhost:3001/
    ```
+
+## Available CLI commands
+
+```bash
+Usage: sabbar [options] [command]
+
+Options:
+  -V, --version       output the version number
+  -h, --help          display help for command
+
+Commands:
+  customer [options]  Show existing list of customers
+  cruiser [options]   Show existing list of cruisers
+  manual              Show this help
+  exit                Kill the CLI (and the rest of the application)
+  help [command]      display help for command
+```
 
 ## Importing Postman Collection
 
