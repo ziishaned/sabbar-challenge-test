@@ -1,5 +1,16 @@
 # sabbar-challenge-test
 
+## Demo
+
+### Listing
+![Listing](https://imgur.com/1FpdyB7.png)
+### Update
+![Update](https://imgur.com/aQRXZdg.png)
+### Delete
+![Delete](https://imgur.com/tPNgGQm.png)
+### Create
+![Create](https://imgur.com/X4Lciuv.png)
+
 ## Getting started
 
 1. Clone the repository
