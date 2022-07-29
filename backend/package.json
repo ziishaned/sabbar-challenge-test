@@ -18,14 +18,18 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "cli": "./node_modules/.bin/ts-node cli/index.ts"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/mongoose": "^9.2.0",
     "@nestjs/platform-express": "^9.0.0",
+    "axios": "^0.27.2",
     "class-validator": "^0.13.2",
+    "cli-table": "^0.3.11",
+    "commander": "^9.4.0",
     "mongoose": "^6.5.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
@@ -35,6 +39,7 @@
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
+    "@types/cli-table": "^0.3.0",
     "@types/eslint": "^8.4.5",
     "@types/eslint-plugin-prettier": "^3.1.0",
     "@types/jest": "28.1.4",
