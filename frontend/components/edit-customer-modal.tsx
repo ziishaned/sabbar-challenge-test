@@ -66,7 +66,7 @@ export function EditCustomerModal(props: EditCustomerProps): ReactElement {
 
         setValue('name', customer.name);
         setValue('numberOfRides', customer.numberOfRides);
-        setValue('averageRating', customer.averageRating);
+        setValue('rating', customer.rating);
         setValue('locationLatitude', customer.locationLatitude);
         setValue('locationLongitude', customer.locationLongitude);
     }, [customer]);
@@ -77,7 +77,7 @@ export function EditCustomerModal(props: EditCustomerProps): ReactElement {
             ...data,
             locationLongitude: Number(data.locationLongitude),
             locationLatitude: Number(data.locationLatitude),
-            averageRating: Number(data.averageRating),
+            rating: Number(data.rating),
             numberOfRides: Number(data.numberOfRides)
         })
             .then((res) => {
@@ -148,11 +148,11 @@ export function EditCustomerModal(props: EditCustomerProps): ReactElement {
                                         type='text' {...register("numberOfRides", {required: 'Number of rides field is required'})}/>
                                     <FormErrorMessage>{errors?.numberOfRides?.message}</FormErrorMessage>
                                 </FormControl>
-                                <FormControl isInvalid={!!errors.averageRating}>
-                                    <FormLabel htmlFor='averageRating'>Average Rating</FormLabel>
+                                <FormControl isInvalid={!!errors.rating}>
+                                    <FormLabel htmlFor='rating'>Rating</FormLabel>
                                     <Input
-                                        type='text' {...register("averageRating", {required: 'Average rating field is required'})}/>
-                                    <FormErrorMessage>{errors?.averageRating?.message}</FormErrorMessage>
+                                        type='text' {...register("rating", {required: 'Average rating field is required'})}/>
+                                    <FormErrorMessage>{errors?.rating?.message}</FormErrorMessage>
                                 </FormControl>
                             </ModalBody>
                             <ModalFooter as={Stack} spacing='12px' isInline>

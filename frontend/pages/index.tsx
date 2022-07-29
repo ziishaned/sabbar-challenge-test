@@ -132,7 +132,7 @@ function Home(props: HomeProps): ReactElement {
                                             <Td>{customer.locationLongitude || '-'}</Td>
                                             <Td>{customer.locationLatitude || '-'}</Td>
                                             <Td isNumeric>{customer.numberOfRides}</Td>
-                                            <Td isNumeric>{customer.averageRating}</Td>
+                                            <Td isNumeric>{customer.rating}</Td>
                                             <Td>
                                                 <Stack isInline justifyContent='flex-end'>
                                                     <Button
