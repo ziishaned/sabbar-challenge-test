@@ -1,5 +1,6 @@
 import axios from "axios";
 import {FiEdit, FiTrash} from "react-icons/fi";
+import {DocumentContext} from "next/document";
 import {ReactElement, useEffect, useState} from "react";
 import {
     Button,
@@ -20,10 +21,20 @@ import {
 import {EditCustomerModal} from "../components/edit-customer-modal";
 import {DeleteCustomerModal} from "../components/delete-customer-modal";
 import {CreateCustomerModal} from "../components/create-customer-modal";
+import {useRouter} from "next/router";
 
-export default function Home(): ReactElement {
+type HomeProps = {
+    page: number;
+    limit: number;
+}
+
+function Home(props: HomeProps): ReactElement {
+    const {page, limit} = props;
+
     const toast = useToast();
+    const {push: navigate, query} = useRouter();
 
+    const [totalPages, setTotalPages] = useState<number>(0);
     const [customers, setCustomers] = useState<Customer[]>([]);
     const [toggleReloadCustomers, setToggleReloadCustomers] = useState<boolean>();
     const [isLoadingGetCustomersApi, setIsLoadingGetCustomersApi] = useState<boolean>();
@@ -38,12 +49,15 @@ export default function Home(): ReactElement {
 
     useEffect((): void => {
         getCustomers();
-    }, [toggleReloadCustomers]);
+    }, [toggleReloadCustomers, query]);
 
     const getCustomers = (): void => {
         setIsLoadingGetCustomersApi(true)
-        axios.get('/api/customer')
-            .then((res) => setCustomers(res.data))
+        axios.get(`/api/customer?limit=${Number(limit)}&page=${Number(page)}`)
+            .then((res) => {
+                setCustomers(res.data.customers);
+                setTotalPages(res.data.totalPages);
+            })
             .catch((error) => {
                 toast({
                     status: 'error',
@@ -96,27 +110,31 @@ export default function Home(): ReactElement {
                     <Table variant='striped' borderWidth='1px'>
                         <Thead>
                             <Tr>
-                                <Th>Full Name</Th>
-                                <Th>Current Location</Th>
+                                <Th>Name</Th>
+                                <Th>Is Driver?</Th>
+                                <Th>Longitude</Th>
+                                <Th>Latitude</Th>
                                 <Th isNumeric>Number of Rides</Th>
-                                <Th isNumeric>Average Rating</Th>
+                                <Th isNumeric>Rating</Th>
                                 <Th/>
                             </Tr>
                         </Thead>
                         <Tbody>
                             {!customers.length && (
                                 <tr>
-                                    <Td colSpan={5} textAlign='center' py="35px">No data to display!</Td>
+                                    <Td colSpan={6} textAlign='center' py="35px">No data to display!</Td>
                                 </tr>
                             )}
                             {!!customers.length && (
                                 <>
                                     {customers.map((customer: Customer): ReactElement => (
                                         <Tr key={customer._id}>
-                                            <Td>{customer.fullName || '-'}</Td>
-                                            <Td>{customer.currentLocation || '-'}</Td>
+                                            <Td>{customer.name || '-'}</Td>
+                                            <Td>{customer.isDriver ? 'Yes' : 'No'}</Td>
+                                            <Td>{customer.locationLongitude || '-'}</Td>
+                                            <Td>{customer.locationLatitude || '-'}</Td>
                                             <Td isNumeric>{customer.numberOfRides}</Td>
-                                            <Td isNumeric>{customer.averageRating}</Td>
+                                            <Td isNumeric>{customer.rating}</Td>
                                             <Td>
                                                 <Stack isInline justifyContent='flex-end'>
                                                     <Button
@@ -152,7 +170,44 @@ export default function Home(): ReactElement {
                         </Tbody>
                     </Table>
                 </TableContainer>
+                {!!customers.length && (
+                    <Stack isInline justifyContent='center' spacing='14px'>
+                        <Button
+                            size='sm'
+                            boxShadow='sm'
+                            colorScheme='blue'
+                            isDisabled={page === 1}
+                            onClick={(): void => {
+                                navigate(`/?page=${page - 1}&limit=${limit}`);
+                            }}
+                        >
+                            Previous
+                        </Button>
+                        <Button
+                            size='sm'
+                            boxShadow='sm'
+                            colorScheme='blue'
+                            isDisabled={page === totalPages}
+                            onClick={(): void => {
+                                navigate(`/?page=${page + 1}&limit=${limit}`);
+                            }}
+                        >
+                            Next
+                        </Button>
+                    </Stack>
+                )}
             </Stack>
         </>
     );
 }
+
+Home.getInitialProps = (ctx: DocumentContext) => {
+    const {limit = 10, page = 1} = ctx.query;
+
+    return {
+        page: Number(page),
+        limit: Number(limit),
+    };
+};
+
+export default Home;

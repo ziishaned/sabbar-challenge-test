@@ -6,8 +6,10 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 
+import { FindAllDto } from './dto/find-all.dto';
 import { Customer } from './schemas/customer.schema';
 import { CustomerService } from './customer.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
@@ -23,8 +25,21 @@ export class CustomerController {
   }
 
   @Get()
-  async findAll(): Promise<Customer[]> {
-    return this.customerService.findAll();
+  async findAll(@Query() findAllDto: FindAllDto): Promise<{
+    customers: Customer[];
+    totalPages: number;
+    currentPage: number;
+  }> {
+    const { limit = 10, page = 1 } = findAllDto;
+
+    const count = await this.customerService.count();
+    const customers = await this.customerService.findAll(findAllDto);
+
+    return {
+      customers,
+      currentPage: Number(page),
+      totalPages: Math.ceil(count / Number(limit)),
+    };
   }
 
   @Get(':id')

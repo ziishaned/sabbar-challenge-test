@@ -1,9 +1,11 @@
 type Customer = {
     _id: string;
-    fullName: string;
+    name: string;
+    isDriver: boolean;
     numberOfRides: number;
-    averageRating: number;
-    currentLocation: string;
+    rating: number;
+    locationLongitude: number;
+    locationLatitude: number;
     createdAt: string;
     updatedAt: string;
 }

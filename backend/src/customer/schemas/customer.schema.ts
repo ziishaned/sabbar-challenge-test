@@ -6,16 +6,22 @@ export type CustomerDocument = Customer & Document;
 @Schema({ timestamps: true })
 export class Customer {
   @Prop()
-  fullName: string;
+  name: string;
 
   @Prop()
-  currentLocation: string;
+  isDriver: boolean;
+
+  @Prop()
+  locationLatitude: number;
+
+  @Prop()
+  locationLongitude: number;
 
   @Prop()
   numberOfRides: number;
 
   @Prop()
-  averageRating: number;
+  rating: number;
 }
 
 export const CustomerSchema = SchemaFactory.createForClass(Customer);
