@@ -5,6 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { Customer, CustomerDocument } from './schemas/customer.schema';
+import { FindAllDto } from './dto/find-all.dto';
 
 @Injectable()
 export class CustomerService {
@@ -13,8 +14,19 @@ export class CustomerService {
     private readonly customerModel: Model<CustomerDocument>,
   ) {}
 
-  async findAll(): Promise<Customer[]> {
-    return this.customerModel.find().sort({ updatedAt: -1 }).exec();
+  async findAll(findAllDto: FindAllDto): Promise<Customer[]> {
+    const { limit = 10, page = 1 } = findAllDto;
+
+    return this.customerModel
+      .find()
+      .limit(Number(limit))
+      .skip((Number(page) - 1) * Number(limit))
+      .sort({ updatedAt: -1 })
+      .exec();
+  }
+
+  async count(): Promise<number> {
+    return this.customerModel.count().exec();
   }
 
   async findOne(id: string): Promise<Customer | null> {
