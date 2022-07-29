@@ -9,6 +9,9 @@ export class Customer {
   name: string;
 
   @Prop()
+  isDriver: boolean;
+
+  @Prop()
   locationLatitude: number;
 
   @Prop()

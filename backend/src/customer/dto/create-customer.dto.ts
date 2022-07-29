@@ -1,8 +1,11 @@
-import { IsInt, IsString } from 'class-validator';
+import { IsBoolean, IsInt, IsString } from 'class-validator';
 
 export class CreateCustomerDto {
   @IsString()
   readonly name: string;
+
+  @IsBoolean()
+  readonly isDriver: boolean;
 
   @IsInt()
   readonly locationLatitude: number;
