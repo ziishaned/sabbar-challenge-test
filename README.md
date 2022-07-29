@@ -3,13 +3,13 @@
 ## Demo
 
 ### Listing
-![Listing](https://imgur.com/1FpdyB7.png)
+![Listing](https://imgur.com/b8lhPIB.png)
 ### Update
-![Update](https://imgur.com/aQRXZdg.png)
+![Update](https://imgur.com/PMtBVDa.png)
 ### Delete
-![Delete](https://imgur.com/tPNgGQm.png)
+![Delete](https://imgur.com/P8s6haP.png)
 ### Create
-![Create](https://imgur.com/X4Lciuv.png)
+![Create](https://imgur.com/zDedU67.png)
 
 ## Getting started
 
