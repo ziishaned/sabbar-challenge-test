@@ -66,7 +66,10 @@ export default function Home(): ReactElement {
             />
 
             <Stack maxWidth="70%" margin="auto" spacing="16px" mt="16px">
-                <Heading as='h3' size='lg'>Customers</Heading>
+                <Stack isInline justifyContent='space-between' alignItems='center'>
+                    <Heading as='h3' size='lg'>Customers</Heading>
+                    <Button size='sm' colorScheme='blue' boxShadow='sm'>Create</Button>
+                </Stack>
                 {isLoadingGetCustomersApi && (
                     <Stack isInline py="25px" justifyContent='center' spacing="14px">
                         <Spinner/>
@@ -102,6 +105,7 @@ export default function Home(): ReactElement {
                                                 <Stack isInline justifyContent='flex-end'>
                                                     <Button
                                                         size='sm'
+                                                        boxShadow='sm'
                                                         onClick={(): void => {
                                                             setCustomerIdToEdit(customer._id)
                                                             setToggleCustomerEditModal(!toggleCustomerEditModal);
@@ -113,6 +117,7 @@ export default function Home(): ReactElement {
                                                     </Button>
                                                     <Button
                                                         size='sm'
+                                                        boxShadow='sm'
                                                         colorScheme='red'
                                                         leftIcon={<FiTrash/>}
                                                         onClick={(): void => {

@@ -146,14 +146,25 @@ export function EditCustomerModal(props: EditCustomerProps): ReactElement {
                                 </FormControl>
                             </ModalBody>
                             <ModalFooter as={Stack} spacing='12px' isInline>
-                                <Button type='button' variant='ghost' onClick={() => {
-                                    onClose();
-                                    onCloseCustomerEditModal();
-                                }}>
+                                <Button
+                                    type='button'
+                                    boxShadow='sm'
+                                    variant='ghost'
+                                    onClick={(): void => {
+                                        onClose();
+                                        onCloseCustomerEditModal();
+                                    }}
+                                >
                                     Close
                                 </Button>
-                                <Button type='submit' colorScheme='blue'
-                                        isLoading={isLoadingUpdateCustomerApi}>Update</Button>
+                                <Button
+                                    type='submit'
+                                    boxShadow='sm'
+                                    colorScheme='blue'
+                                    isLoading={isLoadingUpdateCustomerApi}
+                                >
+                                    Update
+                                </Button>
                             </ModalFooter>
                         </>
                     )}
