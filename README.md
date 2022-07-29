@@ -30,19 +30,12 @@
    yarn install
    ```
 
-4. Start backend server:
+4. Start the application by running below command in the root of the project:
    ```bash
-   cd backend
-   yarn start:dev
-   ```
-
-5. Start frontend server:
-   ```bash
-   cd frontend
    yarn dev
    ```
    
-6. Application URLs:
+5. Application URLs:
    ```bash
    frontend: http://localhost:3000/
    backend: http://localhost:3001/

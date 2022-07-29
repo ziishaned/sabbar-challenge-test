@@ -1,0 +1,16 @@
+{
+  "name": "sabbar",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:ziishaned/sabbar-challenge-test.git",
+  "author": "Zeeshan Ahmad <ziishaned@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "server": "yarn --cwd backend start:dev",
+    "client": "yarn --cwd frontend dev",
+    "dev": "concurrently \"yarn client\" \"yarn server\""
+  },
+  "dependencies": {
+    "concurrently": "^7.3.0"
+  }
+}
