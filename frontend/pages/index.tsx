@@ -73,57 +73,64 @@ export default function Home(): ReactElement {
                         <Text>Loading customers...</Text>
                     </Stack>
                 )}
-                {!!customers.length && (
-                    <TableContainer>
-                        <Table variant='striped' borderWidth='1px'>
-                            <Thead>
-                                <Tr>
-                                    <Th>Full Name</Th>
-                                    <Th>Current Location</Th>
-                                    <Th isNumeric>Number of Rides</Th>
-                                    <Th isNumeric>Average Rating</Th>
-                                    <Th/>
-                                </Tr>
-                            </Thead>
-                            <Tbody>
-                                {customers.map((customer: Customer): ReactElement => (
-                                    <Tr key={customer._id}>
-                                        <Td>{customer.fullName || '-'}</Td>
-                                        <Td>{customer.currentLocation || '-'}</Td>
-                                        <Td isNumeric>{customer.numberOfRides}</Td>
-                                        <Td isNumeric>{customer.averageRating}</Td>
-                                        <Td>
-                                            <Stack isInline justifyContent='flex-end'>
-                                                <Button
-                                                    size='sm'
-                                                    onClick={(): void => {
-                                                        setCustomerIdToEdit(customer._id)
-                                                        setToggleCustomerEditModal(!toggleCustomerEditModal);
-                                                    }}
-                                                    colorScheme='blue'
-                                                    leftIcon={<FiEdit/>}
-                                                >
-                                                    Edit
-                                                </Button>
-                                                <Button
-                                                    size='sm'
-                                                    colorScheme='red'
-                                                    leftIcon={<FiTrash/>}
-                                                    onClick={(): void => {
-                                                        setCustomerIdToDelete(customer._id)
-                                                        setToggleCustomerDeleteModal(!toggleCustomerDeleteModal);
-                                                    }}
-                                                >
-                                                    Delete
-                                                </Button>
-                                            </Stack>
-                                        </Td>
-                                    </Tr>
-                                ))}
-                            </Tbody>
-                        </Table>
-                    </TableContainer>
-                )}
+                <TableContainer>
+                    <Table variant='striped' borderWidth='1px'>
+                        <Thead>
+                            <Tr>
+                                <Th>Full Name</Th>
+                                <Th>Current Location</Th>
+                                <Th isNumeric>Number of Rides</Th>
+                                <Th isNumeric>Average Rating</Th>
+                                <Th/>
+                            </Tr>
+                        </Thead>
+                        <Tbody>
+                            {!customers.length && (
+                                <tr>
+                                    <Td colSpan={5} textAlign='center' py="35px">No data to display!</Td>
+                                </tr>
+                            )}
+                            {!!customers.length && (
+                                <>
+                                    {customers.map((customer: Customer): ReactElement => (
+                                        <Tr key={customer._id}>
+                                            <Td>{customer.fullName || '-'}</Td>
+                                            <Td>{customer.currentLocation || '-'}</Td>
+                                            <Td isNumeric>{customer.numberOfRides}</Td>
+                                            <Td isNumeric>{customer.averageRating}</Td>
+                                            <Td>
+                                                <Stack isInline justifyContent='flex-end'>
+                                                    <Button
+                                                        size='sm'
+                                                        onClick={(): void => {
+                                                            setCustomerIdToEdit(customer._id)
+                                                            setToggleCustomerEditModal(!toggleCustomerEditModal);
+                                                        }}
+                                                        colorScheme='blue'
+                                                        leftIcon={<FiEdit/>}
+                                                    >
+                                                        Edit
+                                                    </Button>
+                                                    <Button
+                                                        size='sm'
+                                                        colorScheme='red'
+                                                        leftIcon={<FiTrash/>}
+                                                        onClick={(): void => {
+                                                            setCustomerIdToDelete(customer._id)
+                                                            setToggleCustomerDeleteModal(!toggleCustomerDeleteModal);
+                                                        }}
+                                                    >
+                                                        Delete
+                                                    </Button>
+                                                </Stack>
+                                            </Td>
+                                        </Tr>
+                                    ))}
+                                </>
+                            )}
+                        </Tbody>
+                    </Table>
+                </TableContainer>
             </Stack>
         </>
     );
