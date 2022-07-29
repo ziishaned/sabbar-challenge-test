@@ -15,10 +15,12 @@ export class CustomerService {
   ) {}
 
   async findAll(findAllDto: FindAllDto): Promise<Customer[]> {
-    const { limit = 10, page = 1 } = findAllDto;
+    const { limit = 10, page = 1, isDriver } = findAllDto;
 
     return this.customerModel
-      .find()
+      .find({
+        ...(isDriver !== undefined ? { isDriver: isDriver } : {}),
+      })
       .limit(Number(limit))
       .skip((Number(page) - 1) * Number(limit))
       .sort({ updatedAt: -1 })

@@ -1,36 +1,42 @@
 import axios from 'axios';
 import Table from 'cli-table';
 
-type Customer = {
-  _id: string;
-  fullName: string;
-  numberOfRides: number;
-  averageRating: number;
-  currentLocation: string;
-  createdAt: string;
-  updatedAt: string;
+import { CustomerDocument } from '../../src/customer/schemas/customer.schema';
+
+type Options = {
+  page: string;
+  limit: string;
 };
 
-export default async (): Promise<void> => {
-  const res = await axios.get('http://localhost:3001/customer');
+export default async (options: Options): Promise<void> => {
+  const { page, limit } = options;
 
-  const table = new Table({
-    head: [
-      'Full Name',
-      'Current Location',
-      'Number of Rides',
-      'Number of Rides',
-    ],
-  });
+  try {
+    const res = await axios.get(
+      `http://localhost:3001/customer?page=${Number(page)}&limit${Number(
+        limit,
+      )}&isDriver=false`,
+    );
 
-  res.data.map((customer: Customer) => {
-    table.push([
-      customer.fullName,
-      customer.currentLocation,
-      customer.numberOfRides,
-      customer.averageRating,
-    ]);
-  });
+    const table = new Table({
+      head: ['Name', 'Latitude', 'Longitude', 'Number of Rides', 'Rating'],
+    });
 
-  console.log(table.toString());
+    res.data.customers.map((customer: CustomerDocument) => {
+      table.push([
+        customer.name,
+        customer.locationLatitude,
+        customer.locationLongitude,
+        customer.numberOfRides,
+        customer.rating,
+      ]);
+    });
+
+    console.log(`Limit = ${limit}`);
+    console.log(`Total Pages = ${res.data.totalPages}`);
+    console.log(`Current Page = ${res.data.currentPage}`);
+    console.log(table.toString());
+  } catch (error) {
+    console.log(`Error while fetching customers: ${error.message}`);
+  }
 };
