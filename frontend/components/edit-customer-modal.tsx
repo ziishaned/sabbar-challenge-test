@@ -24,21 +24,23 @@ import axios from "axios";
 type EditCustomerProps = {
     isOpen: boolean;
     customerId?: string;
+    onReloadCustomers: () => void;
     onCloseCustomerEditModal: () => void;
 }
 
 export function EditCustomerModal(props: EditCustomerProps): ReactElement {
+    const {customerId, onCloseCustomerEditModal, onReloadCustomers} = props;
+
     const toast = useToast();
-    const {customerId, onCloseCustomerEditModal} = props;
+    const {isOpen, onClose} = useDisclosure({
+        isOpen: props.isOpen
+    });
 
     const [customer, setCustomer] = useState<Partial<Customer>>({});
 
     const [isLoadingGetCustomerApi, setIsLoadingGetCustomerApi] = useState<boolean>();
     const [isLoadingUpdateCustomerApi, setIsLoadingUpdateCustomerApi] = useState<boolean>();
 
-    const {isOpen, onClose} = useDisclosure({
-        isOpen: props.isOpen
-    });
     const {register, handleSubmit, setValue, formState: {errors}} = useForm<Partial<Customer>>();
 
     useEffect((): void => {
@@ -54,6 +56,7 @@ export function EditCustomerModal(props: EditCustomerProps): ReactElement {
                     description: error.message,
                 });
                 onCloseCustomerEditModal();
+                onReloadCustomers();
             })
             .finally(() => setIsLoadingGetCustomerApi(false));
     }, [customerId]);

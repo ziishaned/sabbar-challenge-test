@@ -23,6 +23,7 @@ export default function Home(): ReactElement {
     const toast = useToast();
 
     const [customers, setCustomers] = useState<Customer[]>([]);
+    const [toggleReloadCustomers, setToggleReloadCustomers] = useState<boolean>();
     const [isLoadingGetCustomersApi, setIsLoadingGetCustomersApi] = useState<boolean>();
 
     const [customerIdToDelete, setCustomerIdToDelete] = useState<string>();
@@ -33,9 +34,9 @@ export default function Home(): ReactElement {
 
     useEffect((): void => {
         getCustomers();
-    }, [toggleCustomerEditModal]);
+    }, [toggleReloadCustomers]);
 
-    const getCustomers =  (): void => {
+    const getCustomers = (): void => {
         setIsLoadingGetCustomersApi(true)
         axios.get('/api/customer')
             .then((res) => setCustomers(res.data))
@@ -54,11 +55,13 @@ export default function Home(): ReactElement {
             <DeleteCustomerModal
                 customerId={customerIdToDelete}
                 isOpen={toggleCustomerDeleteModal}
+                onReloadCustomers={() => setToggleReloadCustomers(!toggleReloadCustomers)}
                 onCloseCustomerDeleteModal={() => setToggleCustomerDeleteModal(!toggleCustomerDeleteModal)}
             />
             <EditCustomerModal
                 customerId={customerIdToEdit}
                 isOpen={toggleCustomerEditModal}
+                onReloadCustomers={() => setToggleReloadCustomers(!toggleReloadCustomers)}
                 onCloseCustomerEditModal={() => setToggleCustomerEditModal(!toggleCustomerEditModal)}
             />
 
