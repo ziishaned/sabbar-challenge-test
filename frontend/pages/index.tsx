@@ -17,6 +17,7 @@ import {
     useToast
 } from "@chakra-ui/react";
 import {EditCustomerModal} from "../components/edit-customer-modal";
+import {DeleteCustomerModal} from "../components/delete-customer-modal";
 
 export default function Home(): ReactElement {
     const toast = useToast();
@@ -24,10 +25,17 @@ export default function Home(): ReactElement {
     const [customers, setCustomers] = useState<Customer[]>([]);
     const [isLoadingGetCustomersApi, setIsLoadingGetCustomersApi] = useState<boolean>();
 
+    const [customerIdToDelete, setCustomerIdToDelete] = useState<string>();
+    const [toggleCustomerDeleteModal, setToggleCustomerDeleteModal] = useState<boolean>(false);
+
     const [customerIdToEdit, setCustomerIdToEdit] = useState<string>();
     const [toggleCustomerEditModal, setToggleCustomerEditModal] = useState<boolean>(false);
 
     useEffect((): void => {
+        getCustomers();
+    }, [toggleCustomerEditModal]);
+
+    const getCustomers =  (): void => {
         setIsLoadingGetCustomersApi(true)
         axios.get('/api/customer')
             .then((res) => setCustomers(res.data))
@@ -39,10 +47,15 @@ export default function Home(): ReactElement {
                 })
             })
             .finally(() => setIsLoadingGetCustomersApi(false));
-    }, []);
+    };
 
     return (
         <>
+            <DeleteCustomerModal
+                customerId={customerIdToDelete}
+                isOpen={toggleCustomerDeleteModal}
+                onCloseCustomerDeleteModal={() => setToggleCustomerDeleteModal(!toggleCustomerDeleteModal)}
+            />
             <EditCustomerModal
                 customerId={customerIdToEdit}
                 isOpen={toggleCustomerEditModal}
@@ -80,7 +93,7 @@ export default function Home(): ReactElement {
                                             <Stack isInline justifyContent='flex-end'>
                                                 <Button
                                                     size='sm'
-                                                    onClick={() => {
+                                                    onClick={(): void => {
                                                         setCustomerIdToEdit(customer._id)
                                                         setToggleCustomerEditModal(!toggleCustomerEditModal);
                                                     }}
@@ -93,6 +106,10 @@ export default function Home(): ReactElement {
                                                     size='sm'
                                                     colorScheme='red'
                                                     leftIcon={<FiTrash/>}
+                                                    onClick={(): void => {
+                                                        setCustomerIdToDelete(customer._id)
+                                                        setToggleCustomerDeleteModal(!toggleCustomerDeleteModal);
+                                                    }}
                                                 >
                                                     Delete
                                                 </Button>
