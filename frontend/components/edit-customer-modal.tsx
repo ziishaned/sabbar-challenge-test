@@ -64,16 +64,19 @@ export function EditCustomerModal(props: EditCustomerProps): ReactElement {
     useEffect(() => {
         if (!Object.values(customer).length) return
 
-        setValue('fullName', customer.fullName);
+        setValue('name', customer.name);
         setValue('numberOfRides', customer.numberOfRides);
         setValue('averageRating', customer.averageRating);
-        setValue('currentLocation', customer.currentLocation);
+        setValue('locationLatitude', customer.locationLatitude);
+        setValue('locationLongitude', customer.locationLongitude);
     }, [customer]);
 
     const onSubmit = (data: Partial<Customer>): void => {
         setIsLoadingUpdateCustomerApi(true)
         axios.put(`/api/customer/${customerId}`, {
             ...data,
+            locationLongitude: Number(data.locationLongitude),
+            locationLatitude: Number(data.locationLatitude),
             averageRating: Number(data.averageRating),
             numberOfRides: Number(data.numberOfRides)
         })
@@ -121,28 +124,34 @@ export function EditCustomerModal(props: EditCustomerProps): ReactElement {
                             <ModalHeader>Edit Customer</ModalHeader>
                             <ModalCloseButton/>
                             <ModalBody as={Stack} spacing="18px">
-                                <FormControl isInvalid={!!errors.fullName}>
-                                    <FormLabel htmlFor='fullName'>Full Name</FormLabel>
+                                <FormControl isInvalid={!!errors.name}>
+                                    <FormLabel htmlFor='name'>Name</FormLabel>
                                     <Input
-                                        type='text' {...register("fullName", {required: 'Full name field is required'})}/>
-                                    <FormErrorMessage>{errors?.fullName?.message}</FormErrorMessage>
+                                        type='text' {...register("name", {required: 'Name field is required'})}/>
+                                    <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
                                 </FormControl>
-                                <FormControl isInvalid={!!errors.currentLocation}>
-                                    <FormLabel htmlFor='currentLocation'>Current Location</FormLabel>
+                                <FormControl isInvalid={!!errors.locationLongitude}>
+                                    <FormLabel htmlFor='locationLongitude'>Location Longitude</FormLabel>
                                     <Input
-                                        type='text' {...register("currentLocation", {required: 'Current location field is required'})}/>
-                                    <FormErrorMessage>{errors?.currentLocation?.message}</FormErrorMessage>
+                                        type='text' {...register("locationLongitude", {required: 'Location longitude field is required'})}/>
+                                    <FormErrorMessage>{errors?.locationLongitude?.message}</FormErrorMessage>
+                                </FormControl>
+                                <FormControl isInvalid={!!errors.locationLatitude}>
+                                    <FormLabel htmlFor='locationLatitude'>Location Latitude</FormLabel>
+                                    <Input
+                                        type='text' {...register("locationLatitude", {required: 'Location latitude field is required'})}/>
+                                    <FormErrorMessage>{errors?.locationLatitude?.message}</FormErrorMessage>
                                 </FormControl>
                                 <FormControl isInvalid={!!errors.numberOfRides}>
                                     <FormLabel htmlFor='numberOfRides'>Number of Rides</FormLabel>
                                     <Input
-                                        type='number' {...register("numberOfRides", {required: 'Number of rides field is required'})}/>
-                                    <FormErrorMessage>{errors?.currentLocation?.message}</FormErrorMessage>
+                                        type='text' {...register("numberOfRides", {required: 'Number of rides field is required'})}/>
+                                    <FormErrorMessage>{errors?.numberOfRides?.message}</FormErrorMessage>
                                 </FormControl>
                                 <FormControl isInvalid={!!errors.averageRating}>
                                     <FormLabel htmlFor='averageRating'>Average Rating</FormLabel>
                                     <Input
-                                        type='number' {...register("averageRating", {required: 'Average rating field is required'})}/>
+                                        type='text' {...register("averageRating", {required: 'Average rating field is required'})}/>
                                     <FormErrorMessage>{errors?.averageRating?.message}</FormErrorMessage>
                                 </FormControl>
                             </ModalBody>

@@ -96,8 +96,9 @@ export default function Home(): ReactElement {
                     <Table variant='striped' borderWidth='1px'>
                         <Thead>
                             <Tr>
-                                <Th>Full Name</Th>
-                                <Th>Current Location</Th>
+                                <Th>Name</Th>
+                                <Th>Longitude</Th>
+                                <Th>Latitude</Th>
                                 <Th isNumeric>Number of Rides</Th>
                                 <Th isNumeric>Average Rating</Th>
                                 <Th/>
@@ -106,15 +107,16 @@ export default function Home(): ReactElement {
                         <Tbody>
                             {!customers.length && (
                                 <tr>
-                                    <Td colSpan={5} textAlign='center' py="35px">No data to display!</Td>
+                                    <Td colSpan={6} textAlign='center' py="35px">No data to display!</Td>
                                 </tr>
                             )}
                             {!!customers.length && (
                                 <>
                                     {customers.map((customer: Customer): ReactElement => (
                                         <Tr key={customer._id}>
-                                            <Td>{customer.fullName || '-'}</Td>
-                                            <Td>{customer.currentLocation || '-'}</Td>
+                                            <Td>{customer.name || '-'}</Td>
+                                            <Td>{customer.locationLongitude || '-'}</Td>
+                                            <Td>{customer.locationLatitude || '-'}</Td>
                                             <Td isNumeric>{customer.numberOfRides}</Td>
                                             <Td isNumeric>{customer.averageRating}</Td>
                                             <Td>
