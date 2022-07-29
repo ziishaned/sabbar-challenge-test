@@ -1,6 +1,5 @@
 import axios from "axios";
 import {FiEdit, FiTrash} from "react-icons/fi";
-import {DocumentContext} from "next/document";
 import {ReactElement, useEffect, useState} from "react";
 import {
     Button,
@@ -240,7 +239,7 @@ function Home(props: HomeProps): ReactElement {
     );
 }
 
-Home.getInitialProps = (ctx: DocumentContext) => {
+Home.getInitialProps = (ctx: Record<any, any>): HomeProps => {
     const {limit = 10, page = 1, isDriver} = ctx.query;
 
     return {
