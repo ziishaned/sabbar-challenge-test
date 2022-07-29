@@ -2,14 +2,17 @@ import { IsInt, IsString } from 'class-validator';
 
 export class UpdateCustomerDto {
   @IsString()
-  readonly fullName: string;
+  readonly name: string;
 
-  @IsString()
-  readonly currentLocation: string;
+  @IsInt()
+  readonly locationLatitude: number;
+
+  @IsInt()
+  readonly locationLongitude: number;
 
   @IsInt()
   readonly numberOfRides: number;
 
   @IsInt()
-  readonly averageRating: number;
+  readonly rating: number;
 }
