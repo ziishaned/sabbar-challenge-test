@@ -64,6 +64,38 @@ Commands:
   help [command]      display help for command
 ```
 
+### Usage
+
+To run any command use below pattern:
+
+```bash
+yarn cli [command-name]
+```
+
+### `customer`
+
+This command will display the list of customers. It also accepts some options which can help you to navigate through pages or limit the number of results to display in terminal. 
+
+![customer](https://imgur.com/Qlb4IjU.png)
+
+### `cruiser`
+
+This command acts just like `customer`. The only difference is that this will display only cruiser (Drivers) in terminal.
+
+![cruiser](https://imgur.com/pHwJzhI.png)
+
+### `manual`
+
+You can view the help screen using this command.
+
+![manual](https://imgur.com/0SjLc3e.png)
+
+### `exit`
+
+This command will kill the CLI.
+
+![exit](https://imgur.com/JTwhe6l.png)
+
 ## Importing Postman Collection
 
 Copy below link and import in postman:
