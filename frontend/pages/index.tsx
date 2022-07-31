@@ -2,6 +2,7 @@ import axios from "axios";
 import {FiEdit, FiTrash} from "react-icons/fi";
 import {ReactElement, useEffect, useState} from "react";
 import {
+    Box,
     Button,
     Checkbox,
     Heading,
@@ -36,6 +37,7 @@ function Home(props: HomeProps): ReactElement {
     const toast = useToast();
     const {push: navigate, query} = useRouter();
 
+    const [totalRows, setTotalRows] = useState<number>();
     const [totalPages, setTotalPages] = useState<number>(0);
     const [customers, setCustomers] = useState<Customer[]>([]);
     const [toggleReloadCustomers, setToggleReloadCustomers] = useState<boolean>();
@@ -57,6 +59,7 @@ function Home(props: HomeProps): ReactElement {
         setIsLoadingGetCustomersApi(true)
         axios.get(`/api/customer?limit=${Number(limit)}&page=${Number(page)}${isDriver ? `&isDriver=${isDriver}` : ''}`)
             .then((res) => {
+                setTotalRows(res.data.count);
                 setCustomers(res.data.customers);
                 setTotalPages(res.data.totalPages);
             })
@@ -130,10 +133,15 @@ function Home(props: HomeProps): ReactElement {
                                     Reset Filters
                                 </Button>
                                 <Select
-                                    width="30%"
+                                    width="40%"
                                     value={limit}
-                                    placeholder='Limit'
+                                    placeholder='Rows to Display'
                                     onChange={(event): void => {
+                                        if (!event.target.value) {
+                                            navigate(`/?page=${page}${isDriver ? `&isDriver=${isDriver}` : ''}`);
+                                            return;
+                                        }
+
                                         navigate(`/?page=${page}&limit=${event.target.value}${isDriver ? `&isDriver=${isDriver}` : ''}`);
                                     }}
                                 >
@@ -208,29 +216,33 @@ function Home(props: HomeProps): ReactElement {
                             </Table>
                         </TableContainer>
                         {!!customers.length && (
-                            <Stack isInline justifyContent='center' spacing='14px'>
-                                <Button
-                                    size='sm'
-                                    boxShadow='sm'
-                                    colorScheme='blue'
-                                    isDisabled={page === 1}
-                                    onClick={(): void => {
-                                        navigate(`/?page=${page - 1}&limit=${limit}${isDriver ? `&isDriver=${isDriver}` : ''}`);
-                                    }}
-                                >
-                                    Previous
-                                </Button>
-                                <Button
-                                    size='sm'
-                                    boxShadow='sm'
-                                    colorScheme='blue'
-                                    isDisabled={page === totalPages}
-                                    onClick={(): void => {
-                                        navigate(`/?page=${page + 1}&limit=${limit}${isDriver ? `&isDriver=${isDriver}` : ''}`);
-                                    }}
-                                >
-                                    Next
-                                </Button>
+                            <Stack isInline spacing='12px' justifyContent='space-between' alignItems='center'>
+                                <Box />
+                                <Stack isInline justifyContent='center' spacing='14px'>
+                                    <Button
+                                        size='sm'
+                                        boxShadow='sm'
+                                        colorScheme='blue'
+                                        isDisabled={page === 1}
+                                        onClick={(): void => {
+                                            navigate(`/?page=${page - 1}&limit=${limit}${isDriver ? `&isDriver=${isDriver}` : ''}`);
+                                        }}
+                                    >
+                                        Previous
+                                    </Button>
+                                    <Button
+                                        size='sm'
+                                        boxShadow='sm'
+                                        colorScheme='blue'
+                                        isDisabled={page === totalPages}
+                                        onClick={(): void => {
+                                            navigate(`/?page=${page + 1}&limit=${limit}${isDriver ? `&isDriver=${isDriver}` : ''}`);
+                                        }}
+                                    >
+                                        Next
+                                    </Button>
+                                </Stack>
+                                <Text color='gray' fontSize='sm'>{totalRows} Rows</Text>
                             </Stack>
                         )}
                     </>

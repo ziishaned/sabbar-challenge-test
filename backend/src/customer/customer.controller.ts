@@ -26,6 +26,7 @@ export class CustomerController {
 
   @Get()
   async findAll(@Query() findAllDto: FindAllDto): Promise<{
+    count: number;
     customers: Customer[];
     totalPages: number;
     currentPage: number;
@@ -36,6 +37,7 @@ export class CustomerController {
     const customers = await this.customerService.findAll(findAllDto);
 
     return {
+      count,
       customers,
       currentPage: Number(page),
       totalPages: Math.ceil(count / Number(limit)),
